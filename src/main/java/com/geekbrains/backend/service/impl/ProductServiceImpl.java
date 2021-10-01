@@ -1,7 +1,8 @@
-package com.geekbrains.backend.service;
+package com.geekbrains.backend.service.impl;
 
 import com.geekbrains.backend.persist.Product;
 import com.geekbrains.backend.repository.ProductRepository;
+import com.geekbrains.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

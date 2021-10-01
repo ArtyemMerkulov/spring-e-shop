@@ -1,6 +1,7 @@
-package com.geekbrains.backend.facade;
+package com.geekbrains.backend.facade.impl;
 
 import com.geekbrains.backend.dto.UserDto;
+import com.geekbrains.backend.facade.UserFacade;
 import com.geekbrains.backend.persist.User;
 import com.geekbrains.backend.service.UserService;
 import com.geekbrains.backend.util.EntityToDtoMapper;
