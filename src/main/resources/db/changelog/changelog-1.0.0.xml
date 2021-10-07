@@ -18,10 +18,7 @@
 
         <createTable tableName="user">
             <column name="uuid" type="uuid">
-                <constraints primaryKey="true" />
-            </column>
-            <column name="role_id" type="int">
-                <constraints nullable="false" foreignKeyName="fk_user_role_id" references="role(id)"/>
+                <constraints primaryKey="true"/>
             </column>
             <column name="email" type="varchar(256)">
                 <constraints nullable="false" unique="true"/>
@@ -43,10 +40,24 @@
             <column name="balance" type="varchar(20)" defaultValue="0">
                 <constraints nullable="false"/>
             </column>
-            <column name="active" type="boolean">
+            <column name="active" type="boolean" defaultValue="true">
                 <constraints nullable="false"/>
             </column>
-            <column name="created_at" type="timestamp">
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="user_roles">
+            <column name="user_uuid" type="uuid">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_user_roles"
+                             foreignKeyName="fk_user_role_user_uuid" references="user(uuid)"/>
+            </column>
+            <column name="role_id" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_user_roles"
+                             foreignKeyName="fk_user_role_role_id" references="role(id)"/>
+            </column>
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -58,7 +69,7 @@
             <column name="title" type="varchar(64)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="created_at" type="timestamp">
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -70,7 +81,7 @@
             <column name="title" type="varchar(128)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="category_id" type="int">>
+            <column name="category_id" type="int">
                 <constraints foreignKeyName="fk_product_category_id" references="category(id)"/>
             </column>
             <column name="price" type="numeric(16,2)">>
@@ -83,13 +94,13 @@
                 <constraints nullable="false"/>
             </column>
             <column name="count" type="int"/>
-            <column name="created_by_user_uuid" type="uuid">
-                <constraints nullable="false" foreignKeyName="fk_product_user_uuid" references="user(uuid)"/>
-            </column>
-            <column name="active" type="boolean">
+            <column name="active" type="boolean" defaultValue="true">
                 <constraints nullable="false"/>
             </column>
-            <column name="created_at" type="timestamp">
+            <column name="created_by" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_product_user_uuid" references="user(uuid)"/>
+            </column>
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -108,7 +119,7 @@
             <column name="status" type="numeric(2)">>
                 <constraints nullable="false"/>
             </column>
-            <column name="created_at" type="timestamp">
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
         </createTable>

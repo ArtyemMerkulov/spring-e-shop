@@ -4,7 +4,7 @@ import com.geekbrains.backend.dto.ProductDto;
 import com.geekbrains.backend.facade.ProductFacade;
 import com.geekbrains.backend.persist.Product;
 import com.geekbrains.backend.service.ProductService;
-import com.geekbrains.backend.util.EntityToDtoMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +15,14 @@ import java.util.stream.Collectors;
 @Service
 public class ProductFacadeImpl implements ProductFacade {
 
-    private final EntityToDtoMapper mapper;
+    private final ModelMapper modelMapper;
 
     private final ProductService productService;
 
     @Autowired
-    public ProductFacadeImpl(EntityToDtoMapper mapper,
+    public ProductFacadeImpl(ModelMapper modelMapper,
                              ProductService productService) {
-        this.mapper = mapper;
+        this.modelMapper = modelMapper;
         this.productService = productService;
     }
 
@@ -30,18 +30,18 @@ public class ProductFacadeImpl implements ProductFacade {
     public List<ProductDto> findAll() {
         return productService.findAll()
                 .stream()
-                .map(product -> mapper.convertToDto(product, ProductDto.class))
+                .map(product -> modelMapper.map(product, ProductDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public ProductDto findByUuid(UUID uuid) {
-        return mapper.convertToDto(productService.findByUuid(uuid), ProductDto.class);
+        return modelMapper.map(productService.findByUuid(uuid), ProductDto.class);
     }
 
     @Override
     public void save(ProductDto productDto) {
-        productService.save(mapper.convertToEntity(productDto, Product.class));
+        productService.save(modelMapper.map(productDto, Product.class));
     }
 
     @Override

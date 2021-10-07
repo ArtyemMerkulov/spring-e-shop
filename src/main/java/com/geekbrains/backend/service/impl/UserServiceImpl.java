@@ -1,13 +1,14 @@
 package com.geekbrains.backend.service.impl;
 
+import com.geekbrains.backend.persist.Role;
 import com.geekbrains.backend.persist.User;
 import com.geekbrains.backend.repository.UserRepository;
 import com.geekbrains.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -31,13 +32,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
-    public void save(User user) {
-        userRepository.save(user);
+    public User save(User user) {
+        User updateUser = user.getUuid() != null
+                          ? userRepository.getOne(user.getUuid())
+                          : new User();
+
+        updateUser.setUuid(user.getUuid());
+        updateUser.setRoles(user.getRoles());
+        updateUser.setEmail(user.getEmail());
+        updateUser.setPassword(user.getPassword());
+        updateUser.setFirstName(user.getFirstName());
+        updateUser.setLastName(user.getLastName());
+        updateUser.setPatronymic(user.getPatronymic());
+        updateUser.setPhone(user.getPhone());
+        updateUser.setAddress(user.getAddress());
+        updateUser.setBalance(user.getBalance());
+        updateUser.setActive(user.getActive());
+        updateUser.setCreatedAt(user.getCreatedAt());
+
+        return userRepository.save(updateUser);
     }
 
     @Override
-    @Transactional
+    public User save(User user, Set<Role> deletedRoles) {
+        deletedRoles.forEach(user::removeRole);
+        return save(user);
+    }
+
+    @Override
     public void deleteByUuid(UUID uuid) {
         userRepository.deleteByUuid(uuid);
     }

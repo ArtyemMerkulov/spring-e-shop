@@ -1,6 +1,5 @@
 package com.geekbrains.backend.dto;
 
-import com.geekbrains.backend.persist.Order;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +16,7 @@ public class OrderItemDto {
     private UUID uuid;
 
     @NotNull
-    private Order order;
+    private OrderDto order;
 
     @NotNull
     private String title;

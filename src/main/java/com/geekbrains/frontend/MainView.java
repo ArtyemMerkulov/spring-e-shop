@@ -14,7 +14,7 @@ public class MainView extends VerticalLayout {
         HorizontalLayout buttonTextLayout = new HorizontalLayout();
 
         Text titleText = new Text("Заголовок интернет-магазина");
-        Text buttonText = new Text("Здесь есть кнопка");
+        Text buttonText = new Text("Здесь есть кнопка!");
 
         Button button = new Button("Нажми меня", event -> {
             Notification.show("Мы нажали на кнопку");
