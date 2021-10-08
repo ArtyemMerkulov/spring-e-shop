@@ -7,6 +7,7 @@ import com.geekbrains.backend.service.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,6 +28,7 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
+    @Transactional
     public List<ProductDto> findAll() {
         return productService.findAll()
                 .stream()
@@ -35,18 +37,21 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
+    @Transactional
     public ProductDto findByUuid(UUID uuid) {
         return modelMapper.map(productService.findByUuid(uuid), ProductDto.class);
     }
 
     @Override
+    @Transactional
     public void save(ProductDto productDto) {
         productService.save(modelMapper.map(productDto, Product.class));
     }
 
     @Override
-    public void deleteByUuid(UUID uuid) {
-        productService.deleteByUuid(uuid);
+    @Transactional
+    public Integer deleteByUuid(UUID uuid) {
+        return productService.deleteByUuid(uuid);
     }
 
 }

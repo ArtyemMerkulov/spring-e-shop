@@ -5,7 +5,6 @@ import com.geekbrains.backend.repository.ProductRepository;
 import com.geekbrains.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -31,15 +30,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
     public void save(Product product) {
         productRepository.save(product);
     }
 
     @Override
-    @Transactional
-    public void deleteByUuid(UUID uuid) {
-        productRepository.deleteByUuid(uuid);
+    public Integer deleteByUuid(UUID uuid) {
+        return productRepository.deleteByUuid(uuid);
     }
 
 }

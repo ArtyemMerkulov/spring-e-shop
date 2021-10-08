@@ -19,4 +19,6 @@ public interface UserService {
 
     void deleteByUuid(UUID uuid);
 
+    User findByEmail(String email);
+
 }

@@ -13,8 +13,12 @@ public interface UserFacade {
 
     UserDto findByUuid(UUID uuid);
 
+    void save(UserDto userDto);
+
     void save(UserDto userDto, Set<RoleDto> deletedRoles);
 
     void deleteByUuid(UUID uuid);
+
+    UserDto findByEmail(String email);
 
 }

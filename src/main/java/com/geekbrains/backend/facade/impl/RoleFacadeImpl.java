@@ -48,4 +48,9 @@ public class RoleFacadeImpl implements RoleFacade {
         roleService.deleteById(id);
     }
 
+    @Override
+    public RoleDto findByTitle(String title) {
+        return modelMapper.map(roleService.getByTitle(title), RoleDto.class);
+    }
+
 }

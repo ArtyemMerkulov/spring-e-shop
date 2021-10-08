@@ -47,6 +47,12 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     @Transactional
+    public void save(UserDto userDto) {
+        userService.save(modelMapper.map(userDto, User.class));
+    }
+
+    @Override
+    @Transactional
     public void save(UserDto userDto, Set<RoleDto> deletedRoles) {
         userService.save(modelMapper.map(userDto, User.class),
                          deletedRoles.stream()
@@ -60,5 +66,10 @@ public class UserFacadeImpl implements UserFacade {
         userService.deleteByUuid(uuid);
     }
 
+    @Override
+    @Transactional
+    public UserDto findByEmail(String email) {
+        return modelMapper.map(userService.findByEmail(email), UserDto.class);
+    }
 
 }

@@ -7,6 +7,7 @@ import com.geekbrains.backend.service.CategoryService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public class CategoryFacadeImpl implements CategoryFacade {
     }
 
     @Override
+    @Transactional
     public List<CategoryDto> findAll() {
         return categoryService.findAll()
                 .stream()
@@ -34,16 +36,19 @@ public class CategoryFacadeImpl implements CategoryFacade {
     }
 
     @Override
+    @Transactional
     public CategoryDto findById(Integer id) {
         return modelMapper.map(categoryService.findById(id), CategoryDto.class);
     }
 
     @Override
+    @Transactional
     public void save(CategoryDto categoryDto) {
         categoryService.save(modelMapper.map(categoryDto, Category.class));
     }
 
     @Override
+    @Transactional
     public void deleteById(Integer id) {
         categoryService.deleteById(id);
     }
