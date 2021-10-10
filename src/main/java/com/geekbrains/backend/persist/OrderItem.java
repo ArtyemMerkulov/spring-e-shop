@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -19,10 +20,11 @@ public class OrderItem {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Type(type = "uuid-char")
     private UUID uuid;
 
     @ManyToOne
-    @JoinColumn(name = "order_uuid", foreignKey = @ForeignKey(name = "fk_order_uuid"))
+    @JoinColumn(name = "order_uuid", foreignKey = @ForeignKey(name = "fk_order_item_order_order_uuid"))
     private Order order;
 
     @Column(name = "title")

@@ -1,6 +1,7 @@
 package com.geekbrains;
 
 import com.geekbrains.config.security.SecurityConfig;
+import com.vaadin.flow.spring.annotation.EnableVaadin;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import java.util.List;
 
 @Configuration
+@EnableVaadin
 @Import(SecurityConfig.class)
 @EnableAutoConfiguration
 @ComponentScan("com.geekbrains")

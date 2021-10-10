@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
 @Getter
@@ -15,12 +16,21 @@ import java.util.List;
 public class Role {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-    private List<User> user;
+//    @OneToMany(mappedBy = "pk.role")
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_uuid", referencedColumnName = "uuid")}
+    )
+    private Set<User> users = new HashSet<>();
 
 }

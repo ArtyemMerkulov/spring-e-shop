@@ -1,7 +1,6 @@
 package com.geekbrains.backend.dto;
 
 import com.geekbrains.backend.enums.OrderStatus;
-import com.geekbrains.backend.persist.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +18,7 @@ public class OrderDto {
     private UUID uuid;
 
     @NotNull
-    private User user;
+    private UserDto user;
 
     @NotNull
     private String phone;
@@ -29,10 +28,8 @@ public class OrderDto {
     @NotNull
     private OrderStatus status;
 
-    @NotNull
     private Timestamp createdAt;
 
-    @NotNull
     private List<OrderItemDto> orderItems;
 
 }

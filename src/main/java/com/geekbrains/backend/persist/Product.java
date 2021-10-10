@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -21,13 +22,15 @@ public class Product {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Type(type = "uuid-char")
+    @Column(name = "uuid")
     private UUID uuid;
 
     @Column(name = "title")
     private String title;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", foreignKey = @ForeignKey(name = "fk_category_id"))
+    @JoinColumn(name = "category_id", foreignKey = @ForeignKey(name = "fk_product_category_category_id"))
     private Category category;
 
     @Column(name = "price")
@@ -42,12 +45,12 @@ public class Product {
     @Column(name = "count")
     private Integer count;
 
-    @ManyToOne
-    @JoinColumn(name = "created_by_user_uuid", foreignKey = @ForeignKey(name = "fk_user_uuid"))
-    private User createByUser;
-
     @Column(name = "active")
     private Boolean active;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by", foreignKey = @ForeignKey(name = "fk_product_user_user_uuid"))
+    private User createBy;
 
     @Column(name = "created_at")
     @CreationTimestamp

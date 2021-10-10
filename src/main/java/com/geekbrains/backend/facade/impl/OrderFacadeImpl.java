@@ -4,7 +4,7 @@ import com.geekbrains.backend.dto.OrderDto;
 import com.geekbrains.backend.facade.OrderFacade;
 import com.geekbrains.backend.persist.Order;
 import com.geekbrains.backend.service.OrderService;
-import com.geekbrains.backend.util.EntityToDtoMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +15,14 @@ import java.util.stream.Collectors;
 @Service
 public class OrderFacadeImpl implements OrderFacade {
 
-    private final EntityToDtoMapper mapper;
+    private final ModelMapper modelMapper;
 
     private final OrderService orderService;
 
     @Autowired
-    public OrderFacadeImpl(EntityToDtoMapper mapper,
+    public OrderFacadeImpl(ModelMapper modelMapper,
                            OrderService orderService) {
-        this.mapper = mapper;
+        this.modelMapper = modelMapper;
         this.orderService = orderService;
     }
 
@@ -30,18 +30,18 @@ public class OrderFacadeImpl implements OrderFacade {
     public List<OrderDto> findAll() {
         return orderService.findAll()
                 .stream()
-                .map(order -> mapper.convertToDto(order, OrderDto.class))
+                .map(order -> modelMapper.map(order, OrderDto.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public OrderDto findByUuid(UUID uuid) {
-        return mapper.convertToDto(orderService.findByUuid(uuid), OrderDto.class);
+        return modelMapper.map(orderService.findByUuid(uuid), OrderDto.class);
     }
 
     @Override
     public void save(OrderDto orderDto) {
-        orderService.save(mapper.convertToEntity(orderDto, Order.class));
+        orderService.save(modelMapper.map(orderDto, Order.class));
     }
 
     @Override

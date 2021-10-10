@@ -5,11 +5,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -22,11 +25,22 @@ public class User {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Type(type = "uuid-char")
+    @Column(name = "uuid")
     private UUID uuid;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "fk_role_id"))
-    private Role role;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_uuid", referencedColumnName = "uuid")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
+    )
+    private Set<Role> roles = new HashSet<>();
+
+//    @ManyToMany(mappedBy = "users")
+
+//    @ElementCollection
+//    private Set<UserRole> userRoles = new HashSet<>();
 
     @Column(name = "email")
     private String email;
@@ -59,9 +73,26 @@ public class User {
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Order> order;
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 
-    @OneToMany(mappedBy = "createByUser", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "createBy")
     private List<Product> product;
+
+//    public void addRole(UserRole userRole) {
+//        userRoles.add(userRole);
+//    }
+//
+//    public void removeRole(UserRole userRole) {
+//        userRoles.remove(userRole);
+//    }
+
+    public void addRole(Role role) {
+        roles.add(role);
+    }
+
+    public void removeRole(Role role) {
+        roles.remove(role);
+    }
+
 }
