@@ -17,7 +17,7 @@ public class CategoryFacadeImpl implements CategoryFacade {
 
     private final ModelMapper modelMapper;
 
-    private final CategoryService categoryService;
+    private CategoryService categoryService;
 
     @Autowired
     public CategoryFacadeImpl(ModelMapper modelMapper,
