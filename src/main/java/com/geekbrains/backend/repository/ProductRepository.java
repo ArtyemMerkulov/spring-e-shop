@@ -1,0 +1,14 @@
+package com.geekbrains.backend.repository;
+
+import com.geekbrains.backend.persist.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.UUID;
+
+public interface ProductRepository extends JpaRepository<Product, UUID> {
+
+    Product getByUuid(UUID uuid);
+
+    Integer deleteByUuid(UUID uuid);
+
+}
