@@ -4,6 +4,7 @@ import com.geekbrains.backend.persist.Role;
 import com.geekbrains.backend.persist.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -20,5 +21,7 @@ public interface UserService {
     void deleteByUuid(UUID uuid);
 
     User findByEmail(String email);
+
+    Optional<User> findByEmailAndPassword(String email, String password);
 
 }
