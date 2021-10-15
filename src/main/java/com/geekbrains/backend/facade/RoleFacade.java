@@ -14,4 +14,6 @@ public interface RoleFacade {
 
     void deleteById(Integer id);
 
+    RoleDto findByTitle(String title);
+
 }

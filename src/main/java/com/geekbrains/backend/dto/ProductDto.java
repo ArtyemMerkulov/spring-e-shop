@@ -1,7 +1,5 @@
 package com.geekbrains.backend.dto;
 
-import com.geekbrains.backend.persist.Category;
-import com.geekbrains.backend.persist.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +19,7 @@ public class ProductDto {
     @NotNull
     private String title;
 
-    private Category category;
+    private CategoryDto category;
 
     @NotNull
     private BigDecimal price;
@@ -35,12 +33,11 @@ public class ProductDto {
     private Integer count;
 
     @NotNull
-    private User createByUser;
-
-    @NotNull
     private Boolean active;
 
     @NotNull
+    private UserDto createByUser;
+
     private Timestamp createdAt;
 
 }

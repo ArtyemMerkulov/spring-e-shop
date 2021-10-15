@@ -13,6 +13,6 @@ public interface ProductService {
 
     void save(Product product);
 
-    void deleteByUuid(UUID uuid);
+    Integer deleteByUuid(UUID uuid);
 
 }

@@ -13,6 +13,6 @@ public interface ProductFacade {
 
     void save(ProductDto userDto);
 
-    void deleteByUuid(UUID uuid);
+    Integer deleteByUuid(UUID uuid);
 
 }

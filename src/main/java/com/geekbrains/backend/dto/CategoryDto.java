@@ -1,6 +1,5 @@
 package com.geekbrains.backend.dto;
 
-import com.geekbrains.backend.persist.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,10 +18,8 @@ public class CategoryDto {
     @NotNull
     private String title;
 
-    @NotNull
     private Timestamp createdAt;
 
-    @NotNull
-    private List<Product> products;
+    private List<ProductDto> products;
 
 }

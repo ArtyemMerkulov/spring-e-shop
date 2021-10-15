@@ -1,6 +1,5 @@
 package com.geekbrains.backend.dto;
 
-import com.geekbrains.backend.persist.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +8,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -18,14 +19,12 @@ public class UserDto {
 
     private UUID uuid;
 
-    @NotNull
-    private Role role;
+    private Set<RoleDto> roles;
 
     @NotNull
     @Email
     private String email;
 
-    @NotNull
     private String password;
 
     @NotNull
@@ -46,7 +45,30 @@ public class UserDto {
     @NotNull
     private Boolean active;
 
-    @NotNull
     private Timestamp createdAt;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDto userDto = (UserDto) o;
+        return Objects.equals(uuid, userDto.uuid)
+                && Objects.equals(roles, userDto.roles)
+                && email.equals(userDto.email)
+                && Objects.equals(password, userDto.password)
+                && firstName.equals(userDto.firstName)
+                && lastName.equals(userDto.lastName)
+                && Objects.equals(patronymic, userDto.patronymic)
+                && Objects.equals(phone, userDto.phone)
+                && Objects.equals(address, userDto.address)
+                && balance.equals(userDto.balance)
+                && active.equals(userDto.active)
+                && Objects.equals(createdAt, userDto.createdAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid, email, firstName, lastName);
+    }
 
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -22,10 +23,11 @@ public class Order {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Type(type = "uuid-char")
     private UUID uuid;
 
     @ManyToOne
-    @JoinColumn(name = "user_uuid", foreignKey = @ForeignKey(name = "fk_user_uuid"))
+    @JoinColumn(name = "user_uuid", foreignKey = @ForeignKey(name = "fk_order_user_user_uuid"))
     private User user;
 
     @Column(name = "phone")
